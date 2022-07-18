@@ -1,0 +1,48 @@
+{
+    "name": "ngmy/specification-example",
+    "type": "project",
+    "description": "This project is a code example of using the PHP Specification to implement a specification pattern. It is written following Domain-Driven Design approach and has a code example of combining a specification and a repository. It uses Eloquent and Doctrine for the ORM.",
+    "keywords": [
+        "specification",
+        "specification pattern",
+        "criteria",
+        "business rule",
+        "ddd",
+        "domain driven design",
+        "design pattern",
+        "orm",
+        "laravel",
+        "eloquent",
+        "doctrine"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yuta Nagamiya",
+            "email": "y.nagamiya@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "doctrine/orm": "^2.12",
+        "illuminate/database": "^9.20",
+        "ngmy/specification": "^0.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
