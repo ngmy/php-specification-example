@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "051f2a4a667e78b3fd7ae831cefb9f13",
+    "content-hash": "11a7c5558a1ec48b25c61768a0875f4e",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1427,7 +1427,7 @@
         },
         {
             "name": "ngmy/specification",
-            "version": "dev-master",
+            "version": "v0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ngmy/php-specification.git",
@@ -1447,7 +1447,6 @@
                 "illuminate/database": "^9.20",
                 "symfony/cache": "^6.1"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -1480,7 +1479,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ngmy/php-specification/issues",
-                "source": "https://github.com/ngmy/php-specification/tree/master"
+                "source": "https://github.com/ngmy/php-specification/tree/v0.3.0"
             },
             "funding": [
                 {
@@ -2774,9 +2773,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "ngmy/specification": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
