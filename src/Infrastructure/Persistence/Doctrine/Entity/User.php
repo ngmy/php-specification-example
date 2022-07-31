@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Infrastructure\Persistence\Doctrine\Entity;
 
-use Doctrine\Common\Collections\AbstractLazyCollection;
 use Doctrine\ORM\PersistentCollection;
 use Domain\Model\User\Sex;
 use Domain\Model\User\User as UserDomainModel;
@@ -39,21 +38,12 @@ class User
      */
     public function toDomainModel(): UserDomainModel
     {
-        /** @var AbstractLazyCollection<array-key, Role> */
-        $roles = $this->roles;
-
-        /** @var positive-int[] */
-        $roleIds = $roles->map(function (Role $role): int {
-            return (int) $role->id;
-        })->toArray();
-
         return new UserDomainModel(
             id: $this->getIntId(),
             name: $this->name,
             email: $this->email,
             age: $this->age,
             sex: Sex::from($this->sex),
-            roleIds: $roleIds,
         );
     }
 

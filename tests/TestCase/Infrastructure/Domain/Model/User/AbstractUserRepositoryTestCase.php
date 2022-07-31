@@ -6,14 +6,12 @@ namespace Tests\TestCase\Infrastructure\Domain\Model\User;
 
 use Closure;
 use Domain\Model\Role\RoleRepositoryInterface;
-use Domain\Model\Role\Specification\AdminRoleSpecification;
-use Domain\Model\Role\Specification\UserRoleSpecification;
-use Domain\Model\User\Specification\AdminRoleUserSpecification;
-use Domain\Model\User\Specification\AdultUserSpecification;
-use Domain\Model\User\Specification\FemaleUserSpecification;
-use Domain\Model\User\Specification\MaleUserSpecification;
-use Domain\Model\User\Specification\MinorUserSpecification;
-use Domain\Model\User\Specification\UserRoleUserSpecification;
+use Domain\Model\Role\Specification\SlugSpecification;
+use Domain\Model\User\Sex;
+use Domain\Model\User\Specification\MaximumAgeSpecification;
+use Domain\Model\User\Specification\MinimumAgeSpecification;
+use Domain\Model\User\Specification\RoleSpecification;
+use Domain\Model\User\Specification\SexSpecification;
 use Domain\Model\User\User;
 use Domain\Model\User\UserRepositoryInterface;
 use Ngmy\Specification\SpecificationInterface;
@@ -26,86 +24,148 @@ abstract class AbstractUserRepositoryTestCase extends AbstractTestCase
      */
     public function dataProviderTestSelectSatisfying(): iterable
     {
-        yield 'Adult' => [
-            'Specification' => new AdultUserSpecification(),
-            'Count' => 4,
+        yield 'adult' => [
+            'specification' => (function (): SpecificationInterface {
+                return new MinimumAgeSpecification(20);
+            })(),
+            'count' => 4,
         ];
 
-        yield 'NOT Adult' => [
-            'Specification' => (new AdultUserSpecification())->not(),
-            'Count' => 4,
+        yield 'NOT adult' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+
+                return $adultAgeSpec->not();
+            })(),
+            'count' => 4,
         ];
 
-        yield 'Adult AND Male' => [
-            'Specification' => (new AdultUserSpecification())->and(new MaleUserSpecification()),
-            'Count' => 2,
+        yield 'adult AND male' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+                $maleSpec = new SexSpecification(Sex::Male->value);
+
+                return $adultAgeSpec->and($maleSpec);
+            })(),
+            'count' => 2,
         ];
 
-        yield 'NOT (Adult AND Male)' => [
-            'Specification' => (new AdultUserSpecification())->and(new MaleUserSpecification())->not(),
-            'Count' => 6,
+        yield 'NOT (adult AND male)' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+                $maleSpec = new SexSpecification(Sex::Male->value);
+
+                return $adultAgeSpec->and($maleSpec)->not();
+            })(),
+            'count' => 6,
         ];
 
-        yield 'Adult OR Male' => [
-            'Specification' => (new AdultUserSpecification())->or(new MaleUserSpecification()),
-            'Count' => 6,
+        yield 'adult OR male' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+                $maleSpec = new SexSpecification(Sex::Male->value);
+
+                return $adultAgeSpec->or($maleSpec);
+            })(),
+            'count' => 6,
         ];
 
-        yield 'NOT (Adult OR Male)' => [
-            'Specification' => (new AdultUserSpecification())->or(new MaleUserSpecification())->not(),
-            'Count' => 2,
+        yield 'NOT (adult OR male)' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+                $maleSpec = new SexSpecification(Sex::Male->value);
+
+                return $adultAgeSpec->or($maleSpec)->not();
+            })(),
+            'count' => 2,
         ];
 
-        yield '(Adult AND Male) OR (Minor AND Female)' => [
-            'Specification' => (new AdultUserSpecification())->and(new MaleUserSpecification())
-                ->or((new MinorUserSpecification())->and(new FemaleUserSpecification())),
-            'Count' => 4,
+        yield '(adult AND male) OR (minor AND female)' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+                $maleSpec = new SexSpecification(Sex::Male->value);
+                $minorAgeSpec = new MaximumAgeSpecification(19);
+                $femaleSpec = new SexSpecification(Sex::Female->value);
+
+                return $adultAgeSpec->and($maleSpec)->or($minorAgeSpec->and($femaleSpec));
+            })(),
+            'count' => 4,
         ];
 
-        yield 'NOT ((Adult AND Male) OR (Minor AND Female))' => [
-            'Specification' => (new AdultUserSpecification())->and(new MaleUserSpecification())
-                ->or((new MinorUserSpecification())->and(new FemaleUserSpecification()))->not(),
-            'Count' => 4,
+        yield 'NOT ((adult AND male) OR (minor AND female))' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+                $maleSpec = new SexSpecification(Sex::Male->value);
+                $minorAgeSpec = new MaximumAgeSpecification(19);
+                $femaleSpec = new SexSpecification(Sex::Female->value);
+
+                return $adultAgeSpec->and($maleSpec)->or($minorAgeSpec->and($femaleSpec))->not();
+            })(),
+            'count' => 4,
         ];
 
-        yield '(Adult OR Minor) AND (Male OR Female)' => [
-            'Specification' => (new AdultUserSpecification())->or(new MinorUserSpecification())
-                ->and((new MaleUserSpecification())->or(new FemaleUserSpecification())),
-            'Count' => 8,
+        yield '(adult OR minor) AND (male OR female)' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+                $maleSpec = new SexSpecification(Sex::Male->value);
+                $minorAgeSpec = new MaximumAgeSpecification(19);
+                $femaleSpec = new SexSpecification(Sex::Female->value);
+
+                return $adultAgeSpec->or($minorAgeSpec)->and($maleSpec->or($femaleSpec));
+            })(),
+            'count' => 8,
         ];
 
-        yield 'NOT ((Adult OR Minor) AND (Male OR Female))' => [
-            'Specification' => (new AdultUserSpecification())->or(new MinorUserSpecification())
-                ->and((new MaleUserSpecification())->or(new FemaleUserSpecification()))->not(),
-            'Count' => 0,
+        yield 'NOT ((adult OR minor) AND (male OR female))' => [
+            'specification' => (function (): SpecificationInterface {
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+                $maleSpec = new SexSpecification(Sex::Male->value);
+                $minorAgeSpec = new MaximumAgeSpecification(19);
+                $femaleSpec = new SexSpecification(Sex::Female->value);
+
+                return $adultAgeSpec->or($minorAgeSpec)->and($maleSpec->or($femaleSpec))->not();
+            })(),
+            'count' => 0,
         ];
 
-        yield 'Admin role' => [
-            'Specification' => function (): SpecificationInterface {
-                return new AdminRoleUserSpecification($this->createRoleRepository(), new AdminRoleSpecification());
+        yield 'admin role' => [
+            'specification' => function (): SpecificationInterface {
+                $adminRoleSpec = new SlugSpecification('admin');
+
+                return new RoleSpecification($this->createRoleRepository(), $adminRoleSpec);
             },
-            'Count' => 4,
+            'count' => 4,
         ];
 
-        yield 'User role' => [
-            'Specification' => function (): SpecificationInterface {
-                return new UserRoleUserSpecification($this->createRoleRepository(), new UserRoleSpecification());
+        yield 'user role' => [
+            'specification' => function (): SpecificationInterface {
+                $userRoleSpec = new SlugSpecification('user');
+
+                return new RoleSpecification($this->createRoleRepository(), $userRoleSpec);
             },
-            'Count' => 4,
+            'count' => 4,
         ];
 
-        yield 'Admin role AND Adult' => [
-            'Specification' => function (): SpecificationInterface {
-                return (new AdminRoleUserSpecification($this->createRoleRepository(), new AdminRoleSpecification()))->and(new AdultUserSpecification());
+        yield 'admin role AND adult' => [
+            'specification' => function (): SpecificationInterface {
+                $adminRoleSpec = new SlugSpecification('admin');
+                $adminSpec = new RoleSpecification($this->createRoleRepository(), $adminRoleSpec);
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+
+                return $adminSpec->and($adultAgeSpec);
             },
-            'Count' => 2,
+            'count' => 2,
         ];
 
-        yield 'User role AND Adult' => [
-            'Specification' => function (): SpecificationInterface {
-                return (new UserRoleUserSpecification($this->createRoleRepository(), new UserRoleSpecification()))->and(new AdultUserSpecification());
+        yield 'user role AND adult' => [
+            'specification' => function (): SpecificationInterface {
+                $userRoleSpec = new SlugSpecification('user');
+                $userSpec = new RoleSpecification($this->createRoleRepository(), $userRoleSpec);
+                $adultAgeSpec = new MinimumAgeSpecification(20);
+
+                return $userSpec->and($adultAgeSpec);
             },
-            'Count' => 2,
+            'count' => 2,
         ];
     }
 
@@ -123,7 +183,7 @@ abstract class AbstractUserRepositoryTestCase extends AbstractTestCase
 
         $users = $repository->selectSatisfying($specification);
 
-        $this->assertCount($count, $users);
+        $this->assertcount($count, $users);
         $this->assertEntityIsSatisfiedBySpecification($users, $specification);
     }
 

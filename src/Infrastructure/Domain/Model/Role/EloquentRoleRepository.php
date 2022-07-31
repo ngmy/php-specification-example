@@ -20,7 +20,7 @@ class EloquentRoleRepository implements RoleRepositoryInterface
      */
     public function selectSatisfying(SpecificationInterface $spec): array
     {
-        $query = EloquentRole::query();
+        $query = EloquentRole::query()->with('users');
         $spec->applyToEloquent($query);
 
         /** @var Collection<array-key, EloquentRole> */

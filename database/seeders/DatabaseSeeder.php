@@ -34,97 +34,101 @@ class DatabaseSeeder extends Seeder
         /** @var EloquentUser Adult, male, and admin role user. */
         $eloquentUser1 = EloquentUser::factory()
             ->create([
+                'name' => 'John Doe 1',
+                'email' => 'john.doe.1@example.com',
                 'age' => 20,
                 'sex' => EloquentUser::SEX_MALE,
             ])
-        ;
-        $eloquentUser1
-            ->roles()
-            ->attach($eloquentAdminRole->id)
         ;
 
         /** @var EloquentUser Adult, female, and admin role user. */
         $eloquentUser2 = EloquentUser::factory()
             ->create([
+                'name' => 'Jane Doe 1',
+                'email' => 'jane.doe.1@example.com',
                 'age' => 20,
                 'sex' => EloquentUser::SEX_FEMALE,
             ])
-        ;
-        $eloquentUser2
-            ->roles()
-            ->attach($eloquentAdminRole->id)
         ;
 
         /** @var EloquentUser Minor, male, and admin role user. */
         $eloquentUser3 = EloquentUser::factory()
             ->create([
+                'name' => 'John Doe 2',
+                'email' => 'john.doe.2@example.com',
                 'age' => 19,
                 'sex' => EloquentUser::SEX_MALE,
             ])
-        ;
-        $eloquentUser3
-            ->roles()
-            ->attach($eloquentAdminRole->id)
         ;
 
         /** @var EloquentUser Minor, female, and admin role user. */
         $eloquentUser4 = EloquentUser::factory()
             ->create([
+                'name' => 'Jane Doe 2',
+                'email' => 'jane.doe.2@example.com',
                 'age' => 19,
                 'sex' => EloquentUser::SEX_FEMALE,
             ])
-        ;
-        $eloquentUser4
-            ->roles()
-            ->attach($eloquentAdminRole->id)
         ;
 
         /** @var EloquentUser Adult, male, and user role user. */
         $eloquentUser5 = EloquentUser::factory()
             ->create([
+                'name' => 'John Doe 3',
+                'email' => 'john.doe.3@example.com',
                 'age' => 20,
                 'sex' => EloquentUser::SEX_MALE,
             ])
-        ;
-        $eloquentUser5
-            ->roles()
-            ->attach($eloquentUserRole->id)
         ;
 
         /** @var EloquentUser Adult, female, and user role user. */
         $eloquentUser6 = EloquentUser::factory()
             ->create([
+                'name' => 'Jane Doe 3',
+                'email' => 'jane.doe.3@example.com',
                 'age' => 20,
                 'sex' => EloquentUser::SEX_FEMALE,
             ])
-        ;
-        $eloquentUser6
-            ->roles()
-            ->attach($eloquentUserRole->id)
         ;
 
         /** @var EloquentUser Minor, male, and user role user. */
         $eloquentUser7 = EloquentUser::factory()
             ->create([
+                'name' => 'John Doe 4',
+                'email' => 'john.doe.4@example.com',
                 'age' => 19,
                 'sex' => EloquentUser::SEX_MALE,
             ])
-        ;
-        $eloquentUser7
-            ->roles()
-            ->attach($eloquentUserRole->id)
         ;
 
         /** @var EloquentUser Minor, female, and user role user. */
         $eloquentUser8 = EloquentUser::factory()
             ->create([
+                'name' => 'Jane Doe 4',
+                'email' => 'jane.doe.4@example.com',
                 'age' => 19,
                 'sex' => EloquentUser::SEX_FEMALE,
             ])
         ;
-        $eloquentUser8
-            ->roles()
-            ->attach($eloquentUserRole->id)
+
+        $eloquentAdminRole
+            ->users()
+            ->attach([
+                $eloquentUser1->id,
+                $eloquentUser2->id,
+                $eloquentUser3->id,
+                $eloquentUser4->id,
+            ])
+        ;
+
+        $eloquentUserRole
+            ->users()
+            ->attach([
+                $eloquentUser5->id,
+                $eloquentUser6->id,
+                $eloquentUser7->id,
+                $eloquentUser8->id,
+            ])
         ;
     }
 }

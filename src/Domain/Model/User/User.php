@@ -12,12 +12,11 @@ class User
     /**
      * Create a new user.
      *
-     * @param positive-int   $id      ID
-     * @param string         $name    name
-     * @param string         $email   email address
-     * @param int<0, max>    $age     age
-     * @param Sex            $sex     sex
-     * @param positive-int[] $roleIds role IDs
+     * @param positive-int $id    ID
+     * @param string       $name  name
+     * @param string       $email email address
+     * @param int<0, max>  $age   age
+     * @param Sex          $sex   sex
      */
     public function __construct(
         private int $id,
@@ -25,7 +24,6 @@ class User
         private string $email,
         private int $age,
         private Sex $sex,
-        private array $roleIds,
     ) {
     }
 
@@ -77,16 +75,6 @@ class User
     public function getSex(): Sex
     {
         return $this->sex;
-    }
-
-    /**
-     * Return the role IDs.
-     *
-     * @return positive-int[] role IDs
-     */
-    public function getRoleIds(): array
-    {
-        return $this->roleIds;
     }
 
     /**

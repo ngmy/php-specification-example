@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Domain\Model\Role;
 
+use Domain\Model\User\User;
+
 /**
  * Role.
  */
@@ -16,12 +18,14 @@ class Role
      * @param string       $name        name
      * @param string       $slug        slug
      * @param string       $description description
+     * @param User[]       $users       users
      */
     public function __construct(
         private int $id,
         private string $name,
         private string $slug,
         private string $description,
+        private array $users,
     ) {
     }
 
@@ -63,6 +67,16 @@ class Role
     public function getDescrition(): string
     {
         return $this->description;
+    }
+
+    /**
+     * Return the users.
+     *
+     * @return User[] users
+     */
+    public function getUsers(): array
+    {
+        return $this->users;
     }
 
     /**

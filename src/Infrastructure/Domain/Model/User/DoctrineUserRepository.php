@@ -27,12 +27,12 @@ class DoctrineUserRepository implements UserRepositoryInterface
      */
     public function selectSatisfying(SpecificationInterface $spec): array
     {
-        $query = $this->entityManager->createQueryBuilder();
-        $query->select('u')->from(EntityUser::class, 'u');
-        $spec->applyToDoctrine($query);
+        $queryBuilder = $this->entityManager->createQueryBuilder();
+        $queryBuilder->select('u')->from(EntityUser::class, 'u');
+        $spec->applyToDoctrine($queryBuilder);
 
         /** @var EntityUser[] */
-        $entities = $query->getQuery()->getResult();
+        $entities = $queryBuilder->getQuery()->getResult();
 
         return array_map(function (EntityUser $entityUser): User {
             return $entityUser->toDomainModel();

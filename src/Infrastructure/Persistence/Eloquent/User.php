@@ -47,16 +47,12 @@ class User extends AbstractModel
      */
     public function toDomainModel(): UserDomainModel
     {
-        /** @var positive-int[] */
-        $roleIds = $this->roles->pluck('id')->toArray();
-
         return new UserDomainModel(
             id: $this->id,
             name: $this->name,
             email: $this->email,
             age: $this->age,
             sex: Sex::from($this->sex),
-            roleIds: $roleIds,
         );
     }
 
