@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "11a7c5558a1ec48b25c61768a0875f4e",
+    "content-hash": "777a87ebc53c821f076e67a9afc84f99",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1427,16 +1427,16 @@
         },
         {
             "name": "ngmy/specification",
-            "version": "v0.3.0",
+            "version": "v0.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ngmy/php-specification.git",
-                "reference": "0c91ec8eddb22fdae8dcd3ad7408edee8632a48a"
+                "reference": "943c197f256dc3de3b42fafea0172e2290e1f98f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ngmy/php-specification/zipball/0c91ec8eddb22fdae8dcd3ad7408edee8632a48a",
-                "reference": "0c91ec8eddb22fdae8dcd3ad7408edee8632a48a",
+                "url": "https://api.github.com/repos/ngmy/php-specification/zipball/943c197f256dc3de3b42fafea0172e2290e1f98f",
+                "reference": "943c197f256dc3de3b42fafea0172e2290e1f98f",
                 "shasum": ""
             },
             "require": {
@@ -1479,7 +1479,7 @@
             ],
             "support": {
                 "issues": "https://github.com/ngmy/php-specification/issues",
-                "source": "https://github.com/ngmy/php-specification/tree/v0.3.0"
+                "source": "https://github.com/ngmy/php-specification/tree/v0.4.0"
             },
             "funding": [
                 {
@@ -1491,7 +1491,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-07-31T18:10:21+00:00"
+            "time": "2022-08-04T13:26:33+00:00"
         },
         {
             "name": "psr/cache",
