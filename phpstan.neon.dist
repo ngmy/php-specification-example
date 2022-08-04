@@ -3,6 +3,7 @@ parameters:
   paths:
     - src
     - tests
+    - database
   reportUnmatchedIgnoredErrors: false
   bootstrapFiles:
     - vendor-bin/phpstan/vendor/autoload.php
