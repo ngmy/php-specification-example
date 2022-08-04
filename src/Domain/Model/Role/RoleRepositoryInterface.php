@@ -18,5 +18,14 @@ interface RoleRepositoryInterface
      *
      * @return Role[] roles satisfying the specification
      */
-    public function selectSatisfying(SpecificationInterface $spec): array;
+    public function findBySpecification(SpecificationInterface $spec): array;
+
+    /**
+     * Find one role satisfying a specification.
+     *
+     * @param SpecificationInterface<Role> $spec specification
+     *
+     * @return null|Role one role satisfying the specification
+     */
+    public function findOneBySpecification(SpecificationInterface $spec): ?Role;
 }

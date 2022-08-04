@@ -57,7 +57,7 @@ class SearchUserService extends AbstractService
         $spec = $spec->and($this->createSexesSpecification($request));
         $spec = $spec->and($this->createRolesSpecification($request));
 
-        $users = $this->userRepository->selectSatisfying($spec);
+        $users = $this->userRepository->findBySpecification($spec);
 
         $this->dataTransformer->write($users);
     }

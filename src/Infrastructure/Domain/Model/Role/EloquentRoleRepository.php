@@ -18,7 +18,7 @@ class EloquentRoleRepository implements RoleRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function selectSatisfying(SpecificationInterface $spec): array
+    public function findBySpecification(SpecificationInterface $spec): array
     {
         $query = EloquentRole::query()->with('users');
         $spec->applyToEloquent($query);
@@ -35,5 +35,23 @@ class EloquentRoleRepository implements RoleRepositoryInterface
         ;
 
         return $roles;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findOneBySpecification(SpecificationInterface $spec): ?Role
+    {
+        $query = EloquentRole::query()->with('users');
+        $spec->applyToEloquent($query);
+
+        /** @var null|EloquentRole */
+        $eloquentRole = $query->first();
+
+        if (null === $eloquentRole) {
+            return null;
+        }
+
+        return $eloquentRole->toDomainModel();
     }
 }

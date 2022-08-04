@@ -18,7 +18,7 @@ class EloquentUserRepository implements UserRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function selectSatisfying(SpecificationInterface $spec): array
+    public function findBySpecification(SpecificationInterface $spec): array
     {
         $query = EloquentUser::query()->with('roles');
         $spec->applyToEloquent($query);
@@ -35,5 +35,23 @@ class EloquentUserRepository implements UserRepositoryInterface
         ;
 
         return $users;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findOneBySpecification(SpecificationInterface $spec): ?User
+    {
+        $query = EloquentUser::query()->with('roles');
+        $spec->applyToEloquent($query);
+
+        /** @var null|EloquentUser */
+        $eloquentUser = $query->first();
+
+        if (null === $eloquentUser) {
+            return null;
+        }
+
+        return $eloquentUser->toDomainModel();
     }
 }

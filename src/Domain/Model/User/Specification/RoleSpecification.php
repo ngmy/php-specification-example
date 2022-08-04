@@ -35,13 +35,15 @@ class RoleSpecification extends AbstractUserSpecification
      */
     public function isSatisfiedBy($candidate): bool
     {
-        $roles = $this->roleRepository->selectSatisfying($this->roleSlugSpec);
+        $role = $this->roleRepository->findOneBySpecification($this->roleSlugSpec);
 
-        foreach ($roles as $role) {
-            foreach ($role->getUsers() as $user) {
-                if ($user->equals($candidate)) {
-                    return true;
-                }
+        if (null === $role) {
+            return false;
+        }
+
+        foreach ($role->getUsers() as $user) {
+            if ($user->equals($candidate)) {
+                return true;
             }
         }
 

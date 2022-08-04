@@ -22,7 +22,7 @@ abstract class AbstractUserRepositoryTestCase extends AbstractTestCase
     /**
      * @return iterable<array<mixed>>
      */
-    public function dataProviderTestSelectSatisfying(): iterable
+    public function dataProviderTestFindBySpecification(): iterable
     {
         yield 'adult' => [
             'specification' => (function (): SpecificationInterface {
@@ -170,18 +170,18 @@ abstract class AbstractUserRepositoryTestCase extends AbstractTestCase
     }
 
     /**
-     * @dataProvider dataProviderTestSelectSatisfying
+     * @dataProvider dataProviderTestFindBySpecification
      *
      * @param Closure():SpecificationInterface<User>|SpecificationInterface<User> $specification specification
      * @param int<0, max>                                                         $count         count of users satisfying the specification
      */
-    public function testSelectSatisfying($specification, int $count): void
+    public function testFindBySpecification($specification, int $count): void
     {
         $specification = $specification instanceof Closure ? $specification() : $specification;
 
         $repository = $this->createUserRepository();
 
-        $users = $repository->selectSatisfying($specification);
+        $users = $repository->findBySpecification($specification);
 
         $this->assertcount($count, $users);
         $this->assertEntityIsSatisfiedBySpecification($users, $specification);

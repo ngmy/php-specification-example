@@ -18,5 +18,14 @@ interface UserRepositoryInterface
      *
      * @return User[] users satisfying the specification
      */
-    public function selectSatisfying(SpecificationInterface $spec): array;
+    public function findBySpecification(SpecificationInterface $spec): array;
+
+    /**
+     * Find one user satisfying a specification.
+     *
+     * @param SpecificationInterface<User> $spec specification
+     *
+     * @return null|User one user satisfying the specification
+     */
+    public function findOneBySpecification(SpecificationInterface $spec): ?User;
 }

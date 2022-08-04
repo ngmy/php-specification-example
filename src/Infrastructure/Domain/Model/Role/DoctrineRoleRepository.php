@@ -7,7 +7,7 @@ namespace Infrastructure\Domain\Model\Role;
 use Doctrine\ORM\EntityManager;
 use Domain\Model\Role\Role;
 use Domain\Model\Role\RoleRepositoryInterface;
-use Infrastructure\Persistence\Doctrine\Entity\Role as EntityRole;
+use Infrastructure\Persistence\Doctrine\Entity\Role as DoctrineRole;
 use Ngmy\Specification\SpecificationInterface;
 
 /**
@@ -25,17 +25,36 @@ class DoctrineRoleRepository implements RoleRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function selectSatisfying(SpecificationInterface $spec): array
+    public function findBySpecification(SpecificationInterface $spec): array
     {
         $query = $this->entityManager->createQueryBuilder();
-        $query->select('u')->from(EntityRole::class, 'u');
+        $query->select('u')->from(DoctrineRole::class, 'u');
         $spec->applyToDoctrine($query);
 
-        /** @var EntityRole[] */
-        $entities = $query->getQuery()->getResult();
+        /** @var DoctrineRole[] */
+        $doctrineRoles = $query->getQuery()->getResult();
 
-        return array_map(function (EntityRole $entityRole): Role {
-            return $entityRole->toDomainModel();
-        }, $entities);
+        return array_map(function (DoctrineRole $doctrineRole): Role {
+            return $doctrineRole->toDomainModel();
+        }, $doctrineRoles);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function findOneBySpecification(SpecificationInterface $spec): ?Role
+    {
+        $query = $this->entityManager->createQueryBuilder();
+        $query->select('u')->from(DoctrineRole::class, 'u');
+        $spec->applyToDoctrine($query);
+
+        /** @var null|DoctrineRole */
+        $doctrineRole = $query->getQuery()->getSingleResult();
+
+        if (null === $doctrineRole) {
+            return null;
+        }
+
+        return $doctrineRole->toDomainModel();
     }
 }
