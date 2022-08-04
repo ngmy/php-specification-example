@@ -14,14 +14,6 @@ use Domain\Model\User\User as UserDomainModel;
  */
 class Role
 {
-    public const NAME_ADMIN = 'Administrator';
-
-    public const NAME_MEMBER = 'Member';
-
-    public const SLUG_ADMIN = 'admin';
-
-    public const SLUG_MEMBER = 'member';
-
     /** @var numeric-string ID. */
     public string $id;
 

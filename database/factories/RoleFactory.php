@@ -20,8 +20,8 @@ class RoleFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->unique()->randomElement([EloquentRole::NAME_ADMIN, EloquentRole::NAME_MEMBER]),
-            'slug' => $this->faker->unique()->randomElement([EloquentRole::SLUG_ADMIN, EloquentRole::SLUG_MEMBER]),
+            'name' => $this->faker->unique(),
+            'slug' => $this->faker->unique(),
             'description' => $this->faker->text(),
         ];
     }

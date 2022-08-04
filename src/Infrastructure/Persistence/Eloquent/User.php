@@ -28,10 +28,6 @@ class User extends AbstractModel
 {
     use HasFactory;
 
-    public const SEX_MALE = 'male';
-
-    public const SEX_FEMALE = 'female';
-
     /**
      * Roles this user belongs to.
      */

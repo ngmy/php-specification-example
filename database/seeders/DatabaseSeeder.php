@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use Domain\Model\User\Sex;
 use Illuminate\Database\Seeder;
 use Infrastructure\Persistence\Eloquent\Role as EloquentRole;
 use Infrastructure\Persistence\Eloquent\User as EloquentUser;
@@ -18,16 +19,16 @@ class DatabaseSeeder extends Seeder
         /** @var EloquentRole Admin role. */
         $eloquentAdminRole = EloquentRole::factory()
             ->create([
-                'name' => EloquentRole::NAME_ADMIN,
-                'slug' => EloquentRole::SLUG_ADMIN,
+                'name' => 'Administrator',
+                'slug' => 'admin',
             ])
         ;
 
         /** @var EloquentRole Member role. */
         $eloquentMemberRole = EloquentRole::factory()
             ->create([
-                'name' => EloquentRole::NAME_MEMBER,
-                'slug' => EloquentRole::SLUG_MEMBER,
+                'name' => 'Member',
+                'slug' => 'member',
             ])
         ;
 
@@ -37,7 +38,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'John Doe 1',
                 'email' => 'john.doe.1@example.com',
                 'age' => 20,
-                'sex' => EloquentUser::SEX_MALE,
+                'sex' => Sex::Male->value,
             ])
         ;
 
@@ -47,7 +48,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Jane Doe 1',
                 'email' => 'jane.doe.1@example.com',
                 'age' => 20,
-                'sex' => EloquentUser::SEX_FEMALE,
+                'sex' => Sex::Female->value,
             ])
         ;
 
@@ -57,7 +58,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'John Doe 2',
                 'email' => 'john.doe.2@example.com',
                 'age' => 19,
-                'sex' => EloquentUser::SEX_MALE,
+                'sex' => Sex::Male->value,
             ])
         ;
 
@@ -67,7 +68,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Jane Doe 2',
                 'email' => 'jane.doe.2@example.com',
                 'age' => 19,
-                'sex' => EloquentUser::SEX_FEMALE,
+                'sex' => Sex::Female->value,
             ])
         ;
 
@@ -77,7 +78,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'John Doe 3',
                 'email' => 'john.doe.3@example.com',
                 'age' => 20,
-                'sex' => EloquentUser::SEX_MALE,
+                'sex' => Sex::Male->value,
             ])
         ;
 
@@ -87,7 +88,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Jane Doe 3',
                 'email' => 'jane.doe.3@example.com',
                 'age' => 20,
-                'sex' => EloquentUser::SEX_FEMALE,
+                'sex' => Sex::Female->value,
             ])
         ;
 
@@ -97,7 +98,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'John Doe 4',
                 'email' => 'john.doe.4@example.com',
                 'age' => 19,
-                'sex' => EloquentUser::SEX_MALE,
+                'sex' => Sex::Male->value,
             ])
         ;
 
@@ -107,7 +108,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Jane Doe 4',
                 'email' => 'jane.doe.4@example.com',
                 'age' => 19,
-                'sex' => EloquentUser::SEX_FEMALE,
+                'sex' => Sex::Female->value,
             ])
         ;
 

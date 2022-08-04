@@ -13,10 +13,6 @@ use Domain\Model\User\User as UserDomainModel;
  */
 class User
 {
-    public const SEX_MALE = 'male';
-
-    public const SEX_FEMALE = 'female';
-
     /** @var numeric-string ID. */
     public string $id;
 
