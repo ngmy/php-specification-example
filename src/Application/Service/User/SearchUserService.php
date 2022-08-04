@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Application\Service\User;
 
+use Application\DataTransformer\DataTransformerInterface;
+use Application\DataTransformer\User\AbstractUsersDataTransformer;
+use Application\Service\AbstractService;
+use Application\Service\RequestInterface;
 use Domain\Model\Role\RoleRepositoryInterface;
 use Domain\Model\Role\Specification\SlugSpecification;
 use Domain\Model\User\Specification\AbstractUserSpecification;
@@ -19,25 +23,32 @@ use Ngmy\Specification\SpecificationInterface;
 
 /**
  * Search user service.
+ *
+ * @template T of AbstractUsersDataTransformer
+ * @extends AbstractService<T>
  */
-class SearchUserService
+class SearchUserService extends AbstractService
 {
     /**
      * Create a new search user service.
      *
-     * @param UserRepositoryInterface $userRepository user repository
-     * @param RoleRepositoryInterface $roleRepository role repository
+     * @param UserRepositoryInterface $userRepository  user repository
+     * @param RoleRepositoryInterface $roleRepository  role repository
+     * @param T                       $dataTransformer data transformer
      */
-    public function __construct(private readonly UserRepositoryInterface $userRepository, private readonly RoleRepositoryInterface $roleRepository)
-    {
+    public function __construct(
+        private readonly UserRepositoryInterface $userRepository,
+        private readonly RoleRepositoryInterface $roleRepository,
+        protected DataTransformerInterface $dataTransformer,
+    ) {
     }
 
     /**
-     * Execute service.
+     * {@inheritdoc}
      *
-     * @return iterable<array-key, User>
+     * @param SearchUserRequest $request request for service
      */
-    public function execute(SearchUserRequest $request): iterable
+    public function execute(RequestInterface $request): void
     {
         $spec = AbstractUserSpecification::true();
         $spec = $spec->and($this->createNameSpecation($request));
@@ -46,7 +57,9 @@ class SearchUserService
         $spec = $spec->and($this->createSexesSpecification($request));
         $spec = $spec->and($this->createRolesSpecification($request));
 
-        return $this->userRepository->selectSatisfying($spec);
+        $users = $this->userRepository->selectSatisfying($spec);
+
+        $this->dataTransformer->write($users);
     }
 
     /**

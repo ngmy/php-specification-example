@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Application\Service\User;
 
+use Application\Service\RequestInterface;
+
 /**
  * Request class for search user service.
  */
-class SearchUserRequest
+class SearchUserRequest implements RequestInterface
 {
     /**
      * Create a new search user request.

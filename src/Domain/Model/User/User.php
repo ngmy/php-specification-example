@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Domain\Model\User;
 
+use JsonSerializable;
+
 /**
  * User.
  */
-class User
+class User implements JsonSerializable
 {
     /**
      * Create a new user.
@@ -85,5 +87,31 @@ class User
     public function equals($other): bool
     {
         return $other instanceof self && $other->getId() === $this->getId();
+    }
+
+    /**
+     * Convert to array.
+     *
+     * @return array{id: positive-int, name: string, email: string, age: int<0, max>, sex: string}
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail(),
+            'age' => $this->getAge(),
+            'sex' => $this->getSex()->value,
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @return array{id: positive-int, name: string, email: string, age: int<0, max>, sex: string}
+     */
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
     }
 }

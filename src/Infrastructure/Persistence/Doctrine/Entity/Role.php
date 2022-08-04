@@ -61,6 +61,8 @@ class Role
     public function getIntId(): int
     {
         /** @var positive-int */
-        return (int) $this->id;
+        $intId = (int) $this->id;
+
+        return $intId;
     }
 }
