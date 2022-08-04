@@ -23,11 +23,11 @@ class DatabaseSeeder extends Seeder
             ])
         ;
 
-        /** @var EloquentRole User role. */
-        $eloquentUserRole = EloquentRole::factory()
+        /** @var EloquentRole Member role. */
+        $eloquentMemberRole = EloquentRole::factory()
             ->create([
-                'name' => EloquentRole::NAME_USER,
-                'slug' => EloquentRole::SLUG_USER,
+                'name' => EloquentRole::NAME_MEMBER,
+                'slug' => EloquentRole::SLUG_MEMBER,
             ])
         ;
 
@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
             ])
         ;
 
-        /** @var EloquentUser Adult, male, and user role user. */
+        /** @var EloquentUser Adult, male, and member role user. */
         $eloquentUser5 = EloquentUser::factory()
             ->create([
                 'name' => 'John Doe 3',
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
             ])
         ;
 
-        /** @var EloquentUser Adult, female, and user role user. */
+        /** @var EloquentUser Adult, female, and member role user. */
         $eloquentUser6 = EloquentUser::factory()
             ->create([
                 'name' => 'Jane Doe 3',
@@ -91,7 +91,7 @@ class DatabaseSeeder extends Seeder
             ])
         ;
 
-        /** @var EloquentUser Minor, male, and user role user. */
+        /** @var EloquentUser Minor, male, and member role user. */
         $eloquentUser7 = EloquentUser::factory()
             ->create([
                 'name' => 'John Doe 4',
@@ -101,7 +101,7 @@ class DatabaseSeeder extends Seeder
             ])
         ;
 
-        /** @var EloquentUser Minor, female, and user role user. */
+        /** @var EloquentUser Minor, female, and member role user. */
         $eloquentUser8 = EloquentUser::factory()
             ->create([
                 'name' => 'Jane Doe 4',
@@ -121,7 +121,7 @@ class DatabaseSeeder extends Seeder
             ])
         ;
 
-        $eloquentUserRole
+        $eloquentMemberRole
             ->users()
             ->attach([
                 $eloquentUser5->id,

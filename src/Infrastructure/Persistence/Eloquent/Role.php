@@ -26,13 +26,13 @@ class Role extends AbstractModel
 {
     use HasFactory;
 
-    public const NAME_ADMIN = '管理者';
+    public const NAME_ADMIN = 'Administrator';
 
-    public const NAME_USER = 'ユーザー';
+    public const NAME_MEMBER = 'Member';
 
     public const SLUG_ADMIN = 'admin';
 
-    public const SLUG_USER = 'user';
+    public const SLUG_MEMBER = 'member';
 
     /**
      * Users this role belongs to.

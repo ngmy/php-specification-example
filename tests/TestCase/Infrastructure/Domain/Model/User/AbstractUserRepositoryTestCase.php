@@ -137,11 +137,11 @@ abstract class AbstractUserRepositoryTestCase extends AbstractTestCase
             'count' => 4,
         ];
 
-        yield 'user role' => [
+        yield 'member role' => [
             'specification' => function (): SpecificationInterface {
-                $userRoleSpec = new SlugSpecification('user');
+                $memberRoleSpec = new SlugSpecification('member');
 
-                return new RoleSpecification($this->createRoleRepository(), $userRoleSpec);
+                return new RoleSpecification($this->createRoleRepository(), $memberRoleSpec);
             },
             'count' => 4,
         ];
@@ -157,10 +157,10 @@ abstract class AbstractUserRepositoryTestCase extends AbstractTestCase
             'count' => 2,
         ];
 
-        yield 'user role AND adult' => [
+        yield 'member role AND adult' => [
             'specification' => function (): SpecificationInterface {
-                $userRoleSpec = new SlugSpecification('user');
-                $userSpec = new RoleSpecification($this->createRoleRepository(), $userRoleSpec);
+                $memberRoleSpec = new SlugSpecification('member');
+                $userSpec = new RoleSpecification($this->createRoleRepository(), $memberRoleSpec);
                 $adultAgeSpec = new MinimumAgeSpecification(20);
 
                 return $userSpec->and($adultAgeSpec);

@@ -222,22 +222,22 @@ class SearchUserServiceTest extends AbstractTestCase
                     'count' => 4,
                 ];
 
-                yield "roles = ['user'] with {$repositoriesSetKey} repositories set and {$dataTransformerKey} data transformer" => [
+                yield "roles = ['member'] with {$repositoriesSetKey} repositories set and {$dataTransformerKey} data transformer" => [
                     'userRepository' => $repositoriesSet['user'],
                     'roleRepository' => $repositoriesSet['role'],
                     'dataTransformer' => $dataTransformer,
                     'request' => new SearchUserRequest(
-                        roles: ['user'],
+                        roles: ['member'],
                     ),
                     'count' => 4,
                 ];
 
-                yield "roles = ['admin', 'user'] with {$repositoriesSetKey} repositories set and {$dataTransformerKey} data transformer" => [
+                yield "roles = ['admin', 'member'] with {$repositoriesSetKey} repositories set and {$dataTransformerKey} data transformer" => [
                     'userRepository' => $repositoriesSet['user'],
                     'roleRepository' => $repositoriesSet['role'],
                     'dataTransformer' => $dataTransformer,
                     'request' => new SearchUserRequest(
-                        roles: ['admin', 'user'],
+                        roles: ['admin', 'member'],
                     ),
                     'count' => 8,
                 ];
